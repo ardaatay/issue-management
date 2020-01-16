@@ -1,5 +1,6 @@
 package com.ardaatay.issuemanagement.service;
 
+import com.ardaatay.issuemanagement.dto.ProjectDto;
 import com.ardaatay.issuemanagement.entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +10,9 @@ import java.util.List;
 
 public interface ProjectService {
 
-    Project save(Project project);
+    ProjectDto save(ProjectDto project);
 
-    Project getById(Long id);
+    ProjectDto getById(Long id);
 
     List<Project> getByProjectCode(String projectCode);
 
