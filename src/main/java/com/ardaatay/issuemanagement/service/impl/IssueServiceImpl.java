@@ -1,16 +1,18 @@
 package com.ardaatay.issuemanagement.service.impl;
 
-import com.ardaatay.issuemanagement.repository.IssueRepository;
 import com.ardaatay.issuemanagement.dto.IssueDto;
 import com.ardaatay.issuemanagement.entity.Issue;
+import com.ardaatay.issuemanagement.repository.IssueRepository;
 import com.ardaatay.issuemanagement.service.IssueService;
 import com.ardaatay.issuemanagement.util.TPage;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+@Service
 public class IssueServiceImpl implements IssueService {
 
     private final IssueRepository issueRepository;
@@ -23,19 +25,16 @@ public class IssueServiceImpl implements IssueService {
 
 
     @Override
-    public IssueDto save(IssueDto issue) {
-        if (issue.getDate() == null) {
-            throw new IllegalArgumentException("Issue date cannot be null");
-        }
-
-        Issue issueDb = modelMapper.map(issue, Issue.class);
+    public IssueDto save(IssueDto issueDto) {
+        Issue issueDb = modelMapper.map(issueDto, Issue.class);
         issueDb = issueRepository.save(issueDb);
         return modelMapper.map(issueDb, IssueDto.class);
     }
 
     @Override
     public IssueDto getById(Long id) {
-        return null;
+        Issue issueDb = issueRepository.getOne(id);
+        return modelMapper.map(issueDb, IssueDto.class);
     }
 
     @Override
@@ -48,7 +47,29 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Boolean delete(IssueDto issue) {
-        return null;
+    public Boolean delete(IssueDto issueDto) {
+        issueRepository.delete(modelMapper.map(issueDto, Issue.class));
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        issueRepository.deleteById(id);
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public IssueDto update(Long id, IssueDto issueDto) {
+        Issue issueDb = issueRepository.getOne(id);
+        if (issueDb == null) {
+            throw new IllegalArgumentException("Issue Does Not Exist");
+        }
+
+        issueDb.setDescription(issueDto.getDescription());
+        issueDb.setDetails(issueDto.getDetails());
+        issueDb.setDate(issueDto.getDate());
+        issueDb.setIssueStatus(issueDto.getIssueStatus());
+
+        return modelMapper.map(issueRepository.save(issueDb), IssueDto.class);
     }
 }

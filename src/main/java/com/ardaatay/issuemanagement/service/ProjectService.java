@@ -14,11 +14,15 @@ public interface ProjectService {
 
     ProjectDto getById(Long id);
 
-    List<Project> getByProjectCode(String projectCode);
+    List<ProjectDto> getByProjectCode(String projectCode);
 
     List<Project> getByProjectCodeContains(String projectCode);
 
     Page<Project> getAllPageable(Pageable pageable);
 
     Boolean delete(Project project);
+
+    Boolean deleteById(Long id);
+
+    ProjectDto update(Long id, ProjectDto projectDto);
 }
