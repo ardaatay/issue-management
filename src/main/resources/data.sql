@@ -1,1 +1,0 @@
-Insert into project (id,project_name,project_code) values (1,'Test Project','T001'),(2,'Malp','AG001'),(3,'Gnc','RH002');

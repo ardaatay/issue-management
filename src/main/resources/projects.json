@@ -1,0 +1,17 @@
+[
+  {
+    "_class": "com.ardaatay.issuemanagement.entity.Project",
+    "projectCode": "IM",
+    "projectName": "Issue Management Project"
+  },
+  {
+    "_class": "com.ardaatay.issuemanagement.entity.Project",
+    "projectCode": "AG001",
+    "projectName": "Argon Project"
+  },
+  {
+    "_class": "com.ardaatay.issuemanagement.entity.Project",
+    "projectCode": "M001",
+    "projectName": "Malp Project"
+  }
+]
