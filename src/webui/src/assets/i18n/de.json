@@ -1,0 +1,14 @@
+{
+  "Dashboard" : "Instrumententafel",
+  "Project List" : "Projektliste",
+  "Create Project": "Projekt Erstellen",
+  "Save": "Save",
+  "Close": "Close",
+  "Project Detail": "Project Detail",
+  "Project Code": "Project Code",
+  "Project Code is required": "Project Code is required",
+  "Project Code should be (min) 2 char": "Project Code should be (min) 2 char",
+  "Project Name": "Project Name",
+  "Project Name is required": "Project Name is required",
+  "Project Name should be (min) 4 char": "Project Name should be (min) 4 char"
+}

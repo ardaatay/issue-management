@@ -34,7 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
             throw new IllegalArgumentException("Project id sets automatically");
         }
         Project projectCheck = projectRepository.getByProjectCode(projectDto.getProjectCode());
-        if (projectCheck.getProjectCode() != null) {
+        if (projectCheck != null) {
             throw new IllegalArgumentException("Project Code Already Exist");
         }
 

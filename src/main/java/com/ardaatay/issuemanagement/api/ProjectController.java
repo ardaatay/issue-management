@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RequestMapping(ApiPaths.ProjectCtrl.CTRL)
 @Api(produces = ApiPaths.ProjectCtrl.CTRL)
 @Slf4j
+@CrossOrigin
 public class ProjectController {
 
     private final ProjectServiceImpl projectService;

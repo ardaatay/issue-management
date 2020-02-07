@@ -1,0 +1,14 @@
+{
+  "Dashboard": "Anasayfa",
+  "Project List": "Proje Listesi",
+  "Create Project": "Yeni Proje",
+  "Save": "Kaydet",
+  "Close": "Kapat",
+  "Project Detail": "Proje Detay",
+  "Project Code": "Proje Kodu",
+  "Project Code is required": "Proje Kodu zorunludur.",
+  "Project Code should be (min) 2 char": "Proje Kodu (en az) 2 karakter olmak zorundadır.",
+  "Project Name": "Proje Adı",
+  "Project Name is required": "Proje Adı zorunludur",
+  "Project Name should be (min) 4 char": "Proje Adı (en az) 4 karakter olmak zorundadır."
+}
