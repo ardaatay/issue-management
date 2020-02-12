@@ -1,5 +1,6 @@
 package com.ardaatay.issuemanagement.api;
 
+import com.ardaatay.issuemanagement.dto.IssueDetailDto;
 import com.ardaatay.issuemanagement.dto.IssueDto;
 import com.ardaatay.issuemanagement.service.impl.IssueServiceImpl;
 import com.ardaatay.issuemanagement.util.ApiPaths;
@@ -26,6 +27,13 @@ public class IssueController {
     public ResponseEntity<IssueDto> getById(@PathVariable(value = "id") Long id) {
         IssueDto issueDto = issueService.getById(id);
         return ResponseEntity.ok(issueDto);
+    }
+
+    @GetMapping("/detail/{id}")
+    @ApiOperation(value = "Get By Id Operation", response = IssueDto.class)
+    public ResponseEntity<IssueDetailDto> getByIdWithDetails(@PathVariable(value = "id", required = true) Long id) {
+        IssueDetailDto detailDto = issueService.getByIdWithDetails(id);
+        return ResponseEntity.ok(detailDto);
     }
 
     @PostMapping

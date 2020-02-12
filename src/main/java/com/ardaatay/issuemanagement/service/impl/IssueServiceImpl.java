@@ -1,8 +1,11 @@
 package com.ardaatay.issuemanagement.service.impl;
 
+import com.ardaatay.issuemanagement.dto.IssueDetailDto;
 import com.ardaatay.issuemanagement.dto.IssueDto;
+import com.ardaatay.issuemanagement.dto.IssueHistoryDto;
 import com.ardaatay.issuemanagement.entity.Issue;
 import com.ardaatay.issuemanagement.repository.IssueRepository;
+import com.ardaatay.issuemanagement.service.IssueHistoryService;
 import com.ardaatay.issuemanagement.service.IssueService;
 import com.ardaatay.issuemanagement.util.TPage;
 import org.modelmapper.ModelMapper;
@@ -11,16 +14,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class IssueServiceImpl implements IssueService {
 
     private final IssueRepository issueRepository;
     private final ModelMapper modelMapper;
+    private final IssueHistoryService issueHistoryService;
 
-    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper) {
+    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper, IssueHistoryService issueHistoryService) {
         this.issueRepository = issueRepository;
         this.modelMapper = modelMapper;
+        this.issueHistoryService = issueHistoryService;
     }
 
 
@@ -35,6 +41,15 @@ public class IssueServiceImpl implements IssueService {
     public IssueDto getById(Long id) {
         Issue issueDb = issueRepository.getOne(id);
         return modelMapper.map(issueDb, IssueDto.class);
+    }
+
+    @Override
+    public IssueDetailDto getByIdWithDetails(Long id) {
+        Issue issue = issueRepository.getOne(id);
+        IssueDetailDto detailDto = modelMapper.map(issue, IssueDetailDto.class);
+        List<IssueHistoryDto> issueHistoryDtos = issueHistoryService.getByIssueId(issue.getId());
+        detailDto.setIssueHistories(issueHistoryDtos);
+        return detailDto;
     }
 
     @Override
