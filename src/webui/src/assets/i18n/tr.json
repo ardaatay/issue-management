@@ -10,5 +10,7 @@
   "Project Code should be (min) 2 char": "Proje Kodu (en az) 2 karakter olmak zorundadır.",
   "Project Name": "Proje Adı",
   "Project Name is required": "Proje Adı zorunludur",
-  "Project Name should be (min) 4 char": "Proje Adı (en az) 4 karakter olmak zorundadır."
+  "Project Name should be (min) 4 char": "Proje Adı (en az) 4 karakter olmak zorundadır.",
+  "Project Manager": "Proje Yöneticisi",
+  "Project Manager is required" : "Proje yöneticisi zorunludur"
 }

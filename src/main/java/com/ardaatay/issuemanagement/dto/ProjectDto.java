@@ -17,10 +17,17 @@ public class ProjectDto {
     private Long id;
 
     @NotNull
-    @ApiModelProperty(required = true,value = "Name of Project")
+    @ApiModelProperty(required = true, value = "Name of Project")
     private String projectName;
 
     @NotNull
-    @ApiModelProperty(required = true,value = "Code Of Project")
+    @ApiModelProperty(required = true, value = "Code Of Project")
     private String projectCode;
+
+    @NotNull
+    @ApiModelProperty(required = true, value = "Project Manager Id")
+    private long managerId;
+
+    @ApiModelProperty(required = true, value = "Project Manager")
+    private UserDto manager;
 }

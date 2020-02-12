@@ -1,7 +1,9 @@
 package com.ardaatay.issuemanagement.service.impl;
 
 import com.ardaatay.issuemanagement.dto.ProjectDto;
+import com.ardaatay.issuemanagement.dto.UserDto;
 import com.ardaatay.issuemanagement.entity.Project;
+import com.ardaatay.issuemanagement.entity.User;
 import com.ardaatay.issuemanagement.repository.ProjectRepository;
 import com.ardaatay.issuemanagement.service.ProjectService;
 import com.ardaatay.issuemanagement.util.TPage;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,17 +21,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
+    private final UserServiceImpl userServiceImpl;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @Override
     public ProjectDto save(ProjectDto projectDto) {
         if (projectDto.getId() != null) {
             Project p = projectRepository.getOne(projectDto.getId());
-            if (p != null) {
+            if (p.getId() != 0) {
                 throw new IllegalArgumentException("Project had been created");
             }
             throw new IllegalArgumentException("Project id sets automatically");
@@ -39,6 +44,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         Project project = modelMapper.map(projectDto, Project.class);
+        UserDto userDto = userServiceImpl.getById(projectDto.getManagerId());
+        if (userDto != null) {
+            User user = modelMapper.map(userDto, User.class);
+            project.setManager(user);
+        }
         project = projectRepository.save(project);
         return modelMapper.map(project, ProjectDto.class);
     }
@@ -82,7 +92,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto update(Long id, ProjectDto projectDto) {
         Project projectDb = projectRepository.getOne(id);
-        if (projectDb == null) {
+        if (projectDb.getId() == 0) {
             throw new IllegalArgumentException("Project Does Not Exist ID: " + id);
         }
 

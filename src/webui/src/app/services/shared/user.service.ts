@@ -13,8 +13,8 @@ export class UserService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(page): Observable<any> {
-    return this.apiService.get(this.USER_PATH + '/pagination', page).pipe(map(
+  getAll(): Observable<any> {
+    return this.apiService.get(this.USER_PATH + '/getAll').pipe(map(
       res => {
         if (res) {
           return res;

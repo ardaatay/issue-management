@@ -6,10 +6,10 @@
     class="bootstrap"
     [rows]="rows"
     [columns]="cols"
-    [columnMode]="'force'"
+    [columnMode]="'standard'"
     [headerHeight]="50"
     [footerHeight]="50"
-    [rowHeight]="'auto'" şç. ndmsa ğlkbncmklşpilcfkl.ömlkd
+    [rowHeight]="'auto'"
     [externalPaging]="true"
     [count]="page.totalElements"
     [offset]="page.page"
@@ -53,6 +53,18 @@
           <div *ngIf="f.projectName.errors" class="invalid-feedback">
             <div *ngIf="f.projectName.errors.required">{{'Project Name is required' | translate}}</div>
             <div *ngIf="f.projectName.errors.minlength">{{'Project Name should be (min) 4 char' | translate}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{'Project Manager'| translate}}</label>
+
+          <select formControlName="managerId" class="form-control"
+                  [ngClass]="{'is-invalid':f.managerId.errors}">
+            <option *ngFor="let opt of managerOptions" [value]="opt.id">{{opt.nameSurname}}</option>
+          </select>
+          <div *ngIf="f.managerId.errors" class="invalid-feedback">
+            <div *ngIf="f.managerId.errors.required">{{'Project Manager is required' | translate}}</div>
           </div>
         </div>
 

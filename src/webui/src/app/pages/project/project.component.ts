@@ -4,6 +4,7 @@ import {Page} from "../../common/page";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfirmationComponent} from "../../shared/confirmation/confirmation.component";
+import {UserService} from "../../services/shared/user.service";
 
 @Component({
   selector: 'app-project',
@@ -17,11 +18,14 @@ export class ProjectComponent implements OnInit {
   page = new Page();
   cols = [];
   rows = [];
+  managerOptions = [];
+
   modalRef: BsModalRef;
 
   constructor(private projectService: ProjectService,
               private modalService: BsModalService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -29,6 +33,7 @@ export class ProjectComponent implements OnInit {
       {prop: 'id', name: 'No'},
       {prop: 'projectName', name: 'Project Name', sortable: false},
       {prop: 'projectCode', name: 'Project Code', sortable: false},
+      {prop: 'manager.nameSurname', name: 'Manager', sortable: false},
       {prop: 'id', name: 'Actions', cellTemplate: this.tplProjectDeleteCell, flexGrow: 1, sortable: false}
     ];
 
@@ -37,7 +42,12 @@ export class ProjectComponent implements OnInit {
     this.projectForm = this.formBuilder.group({
       'projectCode': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
       'projectName': [null, [Validators.required, Validators.minLength(4)]],
+      'managerId': [null, [Validators.required]],
     });
+
+    this.userService.getAll().subscribe((res => {
+      this.managerOptions = res;
+    }));
   }
 
   get f() {
@@ -54,11 +64,10 @@ export class ProjectComponent implements OnInit {
 
     this.projectService.createProject(this.projectForm.value).subscribe(
       response => {
-        console.log(response);
+        this.setPage({offset: 0});
+        this.closeAndResetModal();
       }
     )
-    this.setPage({offset: 0});
-    this.closeAndResetModal();
   }
 
   closeAndResetModal() {
@@ -70,10 +79,10 @@ export class ProjectComponent implements OnInit {
     this.page.page = pageInfo.offset;
     this.projectService.getAll(this.page).subscribe(pagedData => {
       this.page.size = pagedData.size;
-      this.page.page = pagedData.page;
       this.page.totalElements = pagedData.totalElements;
+      this.page.totalPages=pagedData.totalPages;
       this.rows = pagedData.content;
-    })
+    });
   }
 
   showProjectDeleteConfirmation(value) {

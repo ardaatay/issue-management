@@ -10,5 +10,7 @@
   "Project Code should be (min) 2 char": "Project Code should be (min) 2 char",
   "Project Name": "Project Name",
   "Project Name is required": "Project Name is required",
-  "Project Name should be (min) 4 char": "Project Name should be (min) 4 char"
+  "Project Name should be (min) 4 char": "Project Name should be (min) 4 char",
+  "Project Manager": "Project Manager",
+  "Project Manager is required" : "Project manager is required"
 }
