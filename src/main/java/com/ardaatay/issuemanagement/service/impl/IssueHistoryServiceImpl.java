@@ -1,6 +1,7 @@
 package com.ardaatay.issuemanagement.service.impl;
 
 import com.ardaatay.issuemanagement.dto.IssueHistoryDto;
+import com.ardaatay.issuemanagement.dto.IssueUpdateDto;
 import com.ardaatay.issuemanagement.entity.Issue;
 import com.ardaatay.issuemanagement.entity.IssueHistory;
 import com.ardaatay.issuemanagement.repository.IssueHistoryRepository;
@@ -47,7 +48,7 @@ public class IssueHistoryServiceImpl implements IssueHistoryService {
     @Override
     public TPage<IssueHistoryDto> getAllPageable(Pageable pageable) {
         Page<IssueHistory> data = issueHistoryRepository.findAll(pageable);
-        TPage<IssueHistoryDto> respnose = new TPage<IssueHistoryDto>();
+        TPage<IssueHistoryDto> respnose = new TPage<>();
         respnose.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), IssueHistoryDto[].class)));
         return respnose;
     }

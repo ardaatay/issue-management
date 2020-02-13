@@ -78,6 +78,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<ProjectDto> getAll() {
+        return Arrays.asList(modelMapper.map(projectRepository.findAll(), ProjectDto[].class));
+    }
+
+    @Override
     public Boolean delete(Project project) {
         projectRepository.delete(project);
         return Boolean.TRUE;

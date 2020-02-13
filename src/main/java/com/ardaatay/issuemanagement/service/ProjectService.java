@@ -21,6 +21,8 @@ public interface ProjectService {
 
     TPage<ProjectDto> getAllPageable(Pageable pageable);
 
+    List<ProjectDto> getAll();
+
     Boolean delete(Project project);
 
     Boolean deleteById(Long id);

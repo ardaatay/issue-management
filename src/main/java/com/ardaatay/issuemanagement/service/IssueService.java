@@ -2,6 +2,7 @@ package com.ardaatay.issuemanagement.service;
 
 import com.ardaatay.issuemanagement.dto.IssueDetailDto;
 import com.ardaatay.issuemanagement.dto.IssueDto;
+import com.ardaatay.issuemanagement.dto.IssueUpdateDto;
 import com.ardaatay.issuemanagement.util.TPage;
 import org.springframework.data.domain.Pageable;
 
@@ -20,5 +21,5 @@ public interface IssueService {
 
     Boolean deleteById(Long id);
 
-    IssueDto update(Long id, IssueDto issueDto);
+    IssueDetailDto update(Long id, IssueUpdateDto issueUpdateDto);
 }

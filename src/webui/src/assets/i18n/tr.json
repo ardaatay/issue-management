@@ -1,9 +1,12 @@
 {
+  "Issue Management": "İş Yönetimi",
   "Dashboard": "Anasayfa",
   "Project List": "Proje Listesi",
   "Create Project": "Yeni Proje",
   "Save": "Kaydet",
   "Close": "Kapat",
+  "Project": "Proje",
+  "Project is required": "Proje zorunludur.",
   "Project Detail": "Proje Detay",
   "Project Code": "Proje Kodu",
   "Project Code is required": "Proje Kodu zorunludur.",
@@ -12,5 +15,18 @@
   "Project Name is required": "Proje Adı zorunludur",
   "Project Name should be (min) 4 char": "Proje Adı (en az) 4 karakter olmak zorundadır.",
   "Project Manager": "Proje Yöneticisi",
-  "Project Manager is required" : "Proje yöneticisi zorunludur"
+  "Project Manager is required": "Proje yöneticisi zorunludur",
+  "Create Issue": "Yeni Görev",
+  "Issue List": "Görev Listesi",
+  "Description": "Açıklama",
+  "Description is required": "Açıklama zorunludur.",
+  "Issue": "Görev",
+  "Issue Date": "Görev Zamanı",
+  "Issue Status": "Durum",
+  "Assignee": "Vekil",
+  "Actions": "İşlem",
+  "Details": "Detaylar",
+  "Issue Description": "Görev Açıklama",
+  "Date": "Tarih",
+  "Name Surname": "Ad Soyad"
 }

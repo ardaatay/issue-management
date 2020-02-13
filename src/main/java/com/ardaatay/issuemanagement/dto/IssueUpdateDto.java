@@ -7,41 +7,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "Issue Data Transfer Object")
-public class IssueDto {
-
-    @ApiModelProperty(value = "ID")
+public class IssueUpdateDto {
+    @ApiModelProperty(required = true, value = "ID")
     private Long id;
-
-    @NotNull
-    @ApiModelProperty(required = true, value = "ID")
+    @ApiModelProperty(required = true, value = "Description")
     private String description;
-
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(required = true, value = "Issue Details")
     private String details;
-
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(required = true, value = "Date")
     private Date date;
-
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(required = true, value = "Issue Status")
     private IssueStatus issueStatus;
-
-    @ApiModelProperty(value = "ID")
-    private UserDto assignee;
-
-    @ApiModelProperty(value = "ID")
-    private Long assigneeId;
-
-    @ApiModelProperty(value = "ID")
-    private ProjectDto project;
-
-    @NotNull
-    @ApiModelProperty(required = true, value = "ID")
-    private Long projectId;
+    @ApiModelProperty(required = true, value = "Assignee")
+    private Long assignee_id;
+    @ApiModelProperty(required = true, value = "Project")
+    private Long project_id;
 }

@@ -77,10 +77,10 @@ export class ProjectComponent implements OnInit {
 
   setPage(pageInfo) {
     this.page.page = pageInfo.offset;
-    this.projectService.getAll(this.page).subscribe(pagedData => {
+    this.projectService.getAllByPagination(this.page).subscribe(pagedData => {
       this.page.size = pagedData.size;
       this.page.totalElements = pagedData.totalElements;
-      this.page.totalPages=pagedData.totalPages;
+      this.page.totalPages = pagedData.totalPages;
       this.rows = pagedData.content;
     });
   }

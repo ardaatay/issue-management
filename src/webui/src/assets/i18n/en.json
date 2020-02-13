@@ -12,5 +12,7 @@
   "Project Name is required": "Project Name is required",
   "Project Name should be (min) 4 char": "Project Name should be (min) 4 char",
   "Project Manager": "Project Manager",
-  "Project Manager is required" : "Project manager is required"
+  "Project Manager is required": "Project manager is required",
+  "Create Issue": "Create Issue",
+  "Issue List": "Issue List"
 }

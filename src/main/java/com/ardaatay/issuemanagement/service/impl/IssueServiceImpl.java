@@ -1,9 +1,9 @@
 package com.ardaatay.issuemanagement.service.impl;
 
-import com.ardaatay.issuemanagement.dto.IssueDetailDto;
-import com.ardaatay.issuemanagement.dto.IssueDto;
-import com.ardaatay.issuemanagement.dto.IssueHistoryDto;
+import com.ardaatay.issuemanagement.dto.*;
 import com.ardaatay.issuemanagement.entity.Issue;
+import com.ardaatay.issuemanagement.entity.Project;
+import com.ardaatay.issuemanagement.entity.User;
 import com.ardaatay.issuemanagement.repository.IssueRepository;
 import com.ardaatay.issuemanagement.service.IssueHistoryService;
 import com.ardaatay.issuemanagement.service.IssueService;
@@ -12,8 +12,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,17 +25,30 @@ public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueRepository;
     private final ModelMapper modelMapper;
     private final IssueHistoryService issueHistoryService;
+    private final ProjectServiceImpl projectService;
+    private final UserServiceImpl userService;
 
-    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper, IssueHistoryService issueHistoryService) {
+    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper, IssueHistoryService issueHistoryService, ProjectServiceImpl projectService, UserServiceImpl userService) {
         this.issueRepository = issueRepository;
         this.modelMapper = modelMapper;
         this.issueHistoryService = issueHistoryService;
+        this.projectService = projectService;
+        this.userService = userService;
     }
 
 
     @Override
     public IssueDto save(IssueDto issueDto) {
         Issue issueDb = modelMapper.map(issueDto, Issue.class);
+
+        if (issueDto.getDate() == null) {
+            issueDb.setDate(new Date());
+        }
+
+        ProjectDto projectDto = projectService.getById(issueDto.getProjectId());
+        Project project = modelMapper.map(projectDto, Project.class);
+        issueDb.setProject(project);
+
         issueDb = issueRepository.save(issueDb);
         return modelMapper.map(issueDb, IssueDto.class);
     }
@@ -54,8 +70,8 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public TPage<IssueDto> getAllPageable(Pageable pageable) {
-        Page<Issue> data = issueRepository.findAll(pageable);
-        TPage page = new TPage<IssueDto>();
+        Page<Issue> data = issueRepository.findByOrderByIdDesc(pageable);
+        TPage<IssueDto> page = new TPage<>();
         IssueDto[] dtos = modelMapper.map(data.getContent(), IssueDto[].class);
         page.setStat(data, Arrays.asList(dtos));
         return page;
@@ -73,18 +89,30 @@ public class IssueServiceImpl implements IssueService {
         return Boolean.TRUE;
     }
 
+    @Transactional
     @Override
-    public IssueDto update(Long id, IssueDto issueDto) {
+    public IssueDetailDto update(Long id, IssueUpdateDto issueUpdateDto) {
         Issue issueDb = issueRepository.getOne(id);
-        if (issueDb == null) {
+
+        issueHistoryService.addHistory(id, issueDb);
+
+        if (issueDb.getId() == null) {
             throw new IllegalArgumentException("Issue Does Not Exist");
         }
 
-        issueDb.setDescription(issueDto.getDescription());
-        issueDb.setDetails(issueDto.getDetails());
-        issueDb.setDate(issueDto.getDate());
-        issueDb.setIssueStatus(issueDto.getIssueStatus());
+        issueDb.setDescription(issueUpdateDto.getDescription());
+        issueDb.setDetails(issueUpdateDto.getDetails());
+        issueDb.setDate(issueUpdateDto.getDate());
+        issueDb.setIssueStatus(issueUpdateDto.getIssueStatus());
 
-        return modelMapper.map(issueRepository.save(issueDb), IssueDto.class);
+        ProjectDto projectDto = projectService.getById(issueUpdateDto.getProject_id());
+        Project project = modelMapper.map(projectDto, Project.class);
+        issueDb.setProject(project);
+
+        UserDto userDto = userService.getById(issueUpdateDto.getAssignee_id());
+        User user = modelMapper.map(userDto, User.class);
+        issueDb.setAssignee(user);
+
+        return getByIdWithDetails(issueDb.getId());
     }
 }

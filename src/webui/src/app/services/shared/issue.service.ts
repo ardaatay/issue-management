@@ -13,7 +13,7 @@ export class IssueService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(page): Observable<any> {
+  getAllByPagination(page): Observable<any> {
     return this.apiService.get(this.ISSUE_PATH + '/pagination', page).pipe(map(
       res => {
         if (res) {
@@ -37,8 +37,8 @@ export class IssueService {
     ));
   }
 
-  createIssue(project): Observable<any> {
-    return this.apiService.post(this.ISSUE_PATH, project).pipe(map(
+  createIssue(issue): Observable<any> {
+    return this.apiService.post(this.ISSUE_PATH, issue).pipe(map(
       res => {
         if (res) {
           return res;
@@ -49,8 +49,45 @@ export class IssueService {
     ));
   }
 
+  updateIssue(issue) : Observable<any>{
+    return this.apiService.put(this.ISSUE_PATH+ '/'+ issue.id ,issue).pipe(map(
+      res =>{
+        if(res){
+          return res;
+        }else{
+          console.log(res);
+          return {};
+        }
+      }
+    ));
+  }
+
   deleteIssue(id): Observable<any> {
     return this.apiService.delete(this.ISSUE_PATH, id).pipe(map(
+      res => {
+        if (res) {
+          return res;
+        } else {
+          return {};
+        }
+      }
+    ));
+  }
+
+  getByIdWithDetails(id: number) {
+    return this.apiService.get(this.ISSUE_PATH + '/detail/' + id).pipe(map(
+      res => {
+        if (res) {
+          return res;
+        } else {
+          return {};
+        }
+      }
+    ));
+  }
+
+  getAllIssueStatuses() {
+    return this.apiService.get(this.ISSUE_PATH + '/statuses').pipe(map(
       res => {
         if (res) {
           return res;

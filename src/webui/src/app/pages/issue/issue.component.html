@@ -1,6 +1,6 @@
 <div class="content-wrapper">
 
-  <h3>{{ 'Issue List'| translate }}</h3>
+  <h3> {{ 'Issue List' | translate }} </h3>
 
   <ngx-datatable
     class="bootstrap"
@@ -14,20 +14,79 @@
     [offset]="page.page"
     [limit]="page.size"
     (page)='setPage($event)'>
-
-    <ngx-datatable-column prop="id" name="No" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="description" name="Description" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="date" name="Issue Date" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="issueStatus" name="Status" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="assignee.nameSurname" name="Assignee" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="project.projectName" name="Project Name" sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="project.manager.nameSurname" name="Project Manager"
+    <ngx-datatable-column prop="id"
+                          name="No"
+                          maxWidth="50"
                           sortable="false"></ngx-datatable-column>
-    <ngx-datatable-column prop="id" name="Actions" sortable="false">
+    <ngx-datatable-column prop="description"
+                          name="{{ 'Description' | translate }}"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="date"
+                          name="{{ 'Issue Date' | translate }}"
+                          [cellTemplate]="tplDateCell"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="issueStatus"
+                          name="{{ 'Issue Status' | translate }}"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="assignee.nameSurname"
+                          name="{{ 'Assignee' | translate }}"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="project.projectName"
+                          name="{{ 'Project Name' | translate }}"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="project.manager.nameSurname"
+                          name="{{ 'Project Manager' | translate }}"
+                          sortable="false"></ngx-datatable-column>
+    <ngx-datatable-column prop="id" name="{{ 'Actions' | translate }}" sortable="false">
       <ng-template let-value="value" ngx-datatable-cell-template>
-        <a href="/issue-detail/{{value}}">Detail</a>
+        <a [routerLink]="['issue-detail/',value]">{{ 'Details' | translate }}</a>
+      </ng-template>
+      <ng-template #tplDateCell let-row="row" let-value="value">
+        {{value | date: 'dd/MM/yyyy'}}
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
+  <br>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">{{'Create Issue' | translate}}</button>
+  </div>
 
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Create Issue' | translate}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="issueForm" (ngSubmit)="saveIssue()">
+
+        <div class="form-group">
+          <label>{{'Issue Description'| translate}}</label>
+          <input type="text" formControlName="description" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.description.errors }"/>
+          <div *ngIf="f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">{{'Description is required'| translate}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{'Project'| translate}}</label>
+
+          <select formControlName="projectId" class="form-control" [ngClass]="{ 'is-invalid': f.projectId.errors }">
+            <option *ngFor="let val of projectOptions" [value]="val.id">{{val.projectName}}</option>
+          </select>
+          <div *ngIf="f.projectId.errors" class="invalid-feedback">
+            <div *ngIf="f.projectId.errors.required">{{'Project is required'| translate}}</div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-light" (click)="closeAndResetModal()">{{ 'Close' | translate }}</button>
+          <button class="btn btn-primary">{{ 'Save' | translate }}</button>
+        </div>
+      </form>
+
+    </div>
+  </ng-template>
 </div>
