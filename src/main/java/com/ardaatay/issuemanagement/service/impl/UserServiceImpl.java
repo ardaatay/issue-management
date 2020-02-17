@@ -1,27 +1,34 @@
 package com.ardaatay.issuemanagement.service.impl;
 
+import com.ardaatay.issuemanagement.dto.RegistrationRequest;
 import com.ardaatay.issuemanagement.dto.UserDto;
 import com.ardaatay.issuemanagement.entity.User;
 import com.ardaatay.issuemanagement.repository.UserRepository;
 import com.ardaatay.issuemanagement.service.UserService;
 import com.ardaatay.issuemanagement.util.TPage;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -84,6 +91,22 @@ public class UserServiceImpl implements UserService {
     public Boolean deleteById(Long id) {
         userRepository.deleteById(id);
         return Boolean.TRUE;
+    }
+
+    @Transactional
+    public Boolean register(RegistrationRequest registrationRequest) {
+        try {
+            User user = new User();
+            user.setEmail(registrationRequest.getEmail());
+            user.setNameSurname(registrationRequest.getNameSurname());
+            user.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
+            user.setUsername(registrationRequest.getUsername());
+            userRepository.save(user);
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            log.error("REGISTRATION=>", e);
+            return Boolean.FALSE;
+        }
     }
 
 }

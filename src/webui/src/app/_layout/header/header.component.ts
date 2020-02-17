@@ -8,10 +8,10 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
   pushRightClass: string = 'push-right';
-  collapseClass:string = 'collapsed';
+  collapseClass: string = 'collapsed';
   isCollapsed = false;
 
-  activeUser = {};
+  username: string;
 
   constructor(public router: Router) {
     this.router.events.subscribe(val => {
@@ -27,19 +27,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
 
-    this.activeUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = JSON.parse(localStorage.getItem('currentUser')).username;
   }
 
   isToggled(): boolean {
     const dom: Element = document.querySelector('aside');
-    return (dom)?dom.classList.contains(this.collapseClass):false;
+    return (dom) ? dom.classList.contains(this.collapseClass) : false;
   }
 
   toggleSidebar() {
     const dom: any = document.querySelector('aside');
-    (dom)?dom.classList.toggle(this.collapseClass):'';
+    (dom) ? dom.classList.toggle(this.collapseClass) : '';
     const cdom: any = document.querySelector('#main-container');
-    (cdom)?cdom.classList.toggle(this.collapseClass):'';
+    (cdom) ? cdom.classList.toggle(this.collapseClass) : '';
   }
 
 

@@ -5,17 +5,13 @@
       <li class="nav-item dropdown" dropdown>
         <a href="javascript:void(0)" class="nav-link weight-400 dropdown-toggle" dropdownToggle>
           <i class="fa fa-user"></i>
+          <span class="mx-2"><b>{{ username | uppercase}}</b></span>
         </a>
         <div *dropdownMenu class="dropdown-menu  dropdown-menu-right" role="menu">
-          <a class="dropdown-item">{{activeUser.username}}</a>
-          <a class="dropdown-item">Account Settings</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" [routerLink]="['/login']">Logout</a>
         </div>
       </li>
-
     </ul>
-
   </nav>
 
 </header>

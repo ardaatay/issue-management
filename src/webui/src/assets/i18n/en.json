@@ -1,9 +1,12 @@
 {
+  "Issue Management": "Issue Management",
   "Dashboard": "Dashboard",
   "Project List": "Project List",
   "Create Project": "Create Project",
   "Save": "Save",
   "Close": "Close",
+  "Project": "Project",
+  "Project is required": "Project is required",
   "Project Detail": "Project Detail",
   "Project Code": "Project Code",
   "Project Code is required": "Project Code is required",
@@ -14,5 +17,17 @@
   "Project Manager": "Project Manager",
   "Project Manager is required": "Project manager is required",
   "Create Issue": "Create Issue",
-  "Issue List": "Issue List"
+  "Issue List": "Issue List",
+  "Description": "Description",
+  "Description is required": "Description is required",
+  "Issue": "Issue",
+  "Issue Date": "Issue Date",
+  "Issue Status": "Issue Status",
+  "Assignee": "Assignee",
+  "Actions": "Actions",
+  "Details": "Details",
+  "Issue Description": "Issue Description",
+  "Date": "Date",
+  "Name Surname": "Name Surname",
+  "Copyright": "Copyright"
 }
