@@ -1,7 +1,6 @@
 package com.ardaatay.issuemanagement.service.impl;
 
 import com.ardaatay.issuemanagement.dto.IssueHistoryDto;
-import com.ardaatay.issuemanagement.dto.IssueUpdateDto;
 import com.ardaatay.issuemanagement.entity.Issue;
 import com.ardaatay.issuemanagement.entity.IssueHistory;
 import com.ardaatay.issuemanagement.repository.IssueHistoryRepository;

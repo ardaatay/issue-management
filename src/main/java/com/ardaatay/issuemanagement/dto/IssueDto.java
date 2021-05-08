@@ -16,32 +16,32 @@ import java.util.Date;
 @ApiModel(value = "Issue Data Transfer Object")
 public class IssueDto {
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Id")
     private Long id;
 
     @NotNull
-    @ApiModelProperty(required = true, value = "ID")
+    @ApiModelProperty(required = true, value = "Description")
     private String description;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Details")
     private String details;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Date")
     private Date date;
 
     @ApiModelProperty(value = "ID")
     private IssueStatus issueStatus;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Assignee")
     private UserDto assignee;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "AssigneeId")
     private Long assigneeId;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "Project")
     private ProjectDto project;
 
     @NotNull
-    @ApiModelProperty(required = true, value = "ID")
+    @ApiModelProperty(required = true, value = "ProjectId")
     private Long projectId;
 }

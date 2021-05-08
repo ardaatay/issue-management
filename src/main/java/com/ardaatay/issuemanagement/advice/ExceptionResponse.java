@@ -10,6 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionResponse {
-    private Date date;
-    private String message;
+	private Date date;
+	private String message;
 }

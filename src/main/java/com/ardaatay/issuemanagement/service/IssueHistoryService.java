@@ -1,7 +1,6 @@
 package com.ardaatay.issuemanagement.service;
 
 import com.ardaatay.issuemanagement.dto.IssueHistoryDto;
-import com.ardaatay.issuemanagement.dto.IssueUpdateDto;
 import com.ardaatay.issuemanagement.entity.Issue;
 import com.ardaatay.issuemanagement.util.TPage;
 import org.springframework.data.domain.Pageable;
